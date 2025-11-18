@@ -59,8 +59,21 @@ console.log(getgo.rentCar("T0407944I", "Thi Han", "SMY7906E", 3));
 console.log("\nFunction 5: Returning a Car");
 console.log(getgo.returnCar("T0407944I", "SMY7906E"));
 
+========================================================
 
 # Functions
+
+- Function 1 -  Registering User
+
+- Function 2 - Adding of new new Cars
+
+- Function 3 - View all available cars in GetGo Fleet
+
+- Function 4 - Renting of car
+
+- Function 5 - Returning of rental car
+
+- Function 6 - Apply Promo Code
 
 # References
 Provide the references that you have used to support your assignment. 

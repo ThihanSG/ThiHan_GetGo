@@ -51,8 +51,14 @@ registerUser(name, nric, address, contactno) {
 ```
 
 **Possible Output:**
+
+Successful Output: 
 ```
 User with the following name Thi Han has been registered successfully!
+```
+
+Unsuccessful output:
+```
 User with the following NRIC T0401234D already exists!
 ```
 
@@ -76,8 +82,14 @@ addCar(NumberPlate, Brand, Model, Color, RatePerHours, VehicleType, Status = "Av
 ```
 
 **Possible Output:**
+
+Successful output:
 ```
 Successful output #1: Toyota Sienta Hybrid 3rd Gen with the plate: SMY7906E has been added to the fleet successfully!
+```
+
+Unsuccessful output :
+```
 Unsuccessful output #1: The following car with the plate SMY7906E already exists, please kindly enter a different number plate
 ```
 
@@ -162,8 +174,14 @@ rentCar(nric, name, NumberPlate, Hours) {
 ```
 
 **Possible Output:**
+
+Successful Output:
 ```
 Successful : Thi Han has successfully rented Toyota Sienta Hybrid 3rd Gen, plate No: SMY7906E for 3 hour(s). Total Cost: $150.
+```
+
+Unsuccessful output:
+```
 Unsuccessful output #1 : Car with plate no: SMY7906E is not available
 Unsuccessful output #2 : Renter with the name Thi Han is not registered with us. Please register first
 ```
@@ -194,8 +212,15 @@ returnCar(nric, NumberPlate) {
 ```
 
 **Possible Output:**
+
+Successful output:
 ```
-Successful Output #1 : Car with the plate SMY7906E has been returned successfully. Thank you for booking with GetGo!
+Successful Output #1 : Car with the plate SMY7906E has been returned successfully. Thank you for booking with GetGo
+```
+
+Unsuccessful output
+```
+
 Unsuccessful Output #1 : No ongoing rental booking found for car number plate: SMY7906E and NRIC: T0401234D
 ```
 
@@ -205,7 +230,7 @@ Unsuccessful Output #1 : No ongoing rental booking found for car number plate: S
 const getgo = require("./ThiHan_GetGo.js");
 
 console.log("Function 1: Registering User");
-console.log(getgo.registerUser("Thi Han", "T0407944I", "Blk 123 Yishun Ave 1 #03-149", "81235175"));
+console.log(getgo.registerUser("Thi Han", "T0401234D", "Blk 123 Yishun Ave 1 #03-149", "81235175"));
 
 console.log("\nFunction 2: Adding of new Car");
 console.log(getgo.addCar("SMY7906E", "Toyota", "Sienta Hybrid 3rd Gen", "Grey", "$50 per Hour", "MPV"));
@@ -214,10 +239,10 @@ console.log("\nFunction 3: View Available Cars");
 console.log(getgo.viewAllAvailableCars());
 
 console.log("\nFunction 4: Renting a Car");
-console.log(getgo.rentCar("T0407944I", "Thi Han", "SMY7906E", 3));
+console.log(getgo.rentCar("T0401234D", "Thi Han", "SMY7906E", 3));
 
 console.log("\nFunction 5: Returning a Car");
-console.log(getgo.returnCar("T0407944I", "SMY7906E"));
+console.log(getgo.returnCar("T0401234D", "SMY7906E"));
 ```
 
 ## References

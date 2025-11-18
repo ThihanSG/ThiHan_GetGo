@@ -38,27 +38,6 @@ This Node.js module only uses arrays such as users, cars, rentals to store the n
 
 4. Run the demo using : node app.js 
 
-
-## Example Usage (from `app.js`)
-
-```js
-const getgo = require("./ThiHan_GetGo.js");
-
-console.log("Function 1: Registering User");
-console.log(getgo.registerUser("Thi Han", "T0407944I", "Blk 123 Yishun Ave 1 #03-149", "81235175"));
-
-console.log("\nFunction 2: Adding of new Car");
-console.log(getgo.addCar("SMY7906E", "Toyota", "Sienta Hybrid 3rd Gen", "Grey", "$50 per Hour", "MPV"));
-
-console.log("\nFunction 3: View Available Cars");
-console.log(getgo.viewAllAvailableCars());
-
-console.log("\nFunction 4: Renting a Car");
-console.log(getgo.rentCar("T0407944I", "Thi Han", "SMY7906E", 3));
-
-console.log("\nFunction 5: Returning a Car");
-console.log(getgo.returnCar("T0407944I", "SMY7906E"));
-
 ========================================================
 
 # Functions
@@ -79,3 +58,24 @@ console.log(getgo.returnCar("T0407944I", "SMY7906E"));
 Provide the references that you have used to support your assignment. 
 - GetGo Offical Website : https://www.getgo.sg/
 - ReadMe writing guide : https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax
+
+
+# Example Usage from `app.js`
+
+```js
+const getgo = require("./ThiHan_GetGo.js");
+
+console.log("Function 1: Registering User");
+console.log(getgo.registerUser("Thi Han", "T0407944I", "Blk 123 Yishun Ave 1 #03-149", "81235175"));
+
+console.log("\nFunction 2: Adding of new Car");
+console.log(getgo.addCar("SMY7906E", "Toyota", "Sienta Hybrid 3rd Gen", "Grey", "$50 per Hour", "MPV"));
+
+console.log("\nFunction 3: View Available Cars");
+console.log(getgo.viewAllAvailableCars());
+
+console.log("\nFunction 4: Renting a Car");
+console.log(getgo.rentCar("T0407944I", "Thi Han", "SMY7906E", 3));
+
+console.log("\nFunction 5: Returning a Car");
+console.log(getgo.returnCar("T0407944I", "SMY7906E"));

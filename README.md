@@ -1,68 +1,207 @@
-# <b> Assignment 1 </b>
+# Assignment 1
 
-<b>Name: Thi Han</b>
+<b> Name: Thi Han </b>
 <br>
-<b>Admin No: 234560W</b>
+<b> Admin No: 234560W </b>
 <br>
-<b>Module No: L1 </b>
-<br>
---------------------------------------
+<b> Module No: L1 </b>
 
-# Project Introduction:
+---
 
-This is a Node.js Module as a reference of Car sharing application called GetGo, which allows users to
+## Project Introduction
 
-[1] - Register a user
+This is a Node.js module serving as a reference for a car-sharing application called GetGo. It allows users to:
 
-[2] - Adding Cars
- 
-[3] - View available cars in GetGo fleet
+1.  Register a user
+2.  Add cars to the fleet
+3.  View available cars
+4.  Rent a car
+5.  Return a car
 
-[4] - Renting of car
+This module uses simple in-memory arrays (`users`, `cars`, `rentals`) to store data, making it lightweight and without the need for a database.
 
-[5] - Returning a car 
+## How to Use
 
+1.  Ensure Node.js is installed on your system.
+2.  Copy the `Thihan_GetGo.js` file into a new project folder.
+3.  Create a second file, `app.js`, to test the functions within the Node.js module.
+4.  Run the demo using: `node app.js`
 
+## Functions
 
-This Node.js module only uses arrays such as users, cars, rentals to store the necessary data , making it simple and lightweight without the use of a database.
+Here's a detailed breakdown of each function, including code snippets and possible outputs.
 
+### 1. `registerUser(name, nric, address, contactno)`
 
+**Purpose:** To register new users to the application.
 
-# How to use?
+**Code Snippet:**
+```javascript
+registerUser(name, nric, address, contactno) {
+    const existing = this.users.find(u => u.nric === nric);
+    if (existing) {
+        return `User with the following NRIC ${nric} already exists!`;
+    }
 
-1. Make sure you have Node.js installed.
+    const newUser = { name, nric, address, contactno };
+    this.users.push(newUser);
 
-2. Copy the file Thihan_GetGo.js into a new project folder
+    return `User with the following name ${name} has been registered successfully!`;
+}
+```
 
-3. Create a second file called "app.js" to test the functions inside the node.js module file
+**Possible Output:**
+```
+User with the following name Thi Han has been registered successfully!
+User with the following NRIC T0407944I already exists!
+```
 
-4. Run the demo using : node app.js 
+### 2. `addCar(NumberPlate, Brand, Model, Color, RatePerHours, VehicleType, Status = "Available")`
 
-========================================================
+**Purpose:** To add new cars to the GetGo fleet.
 
-# Functions
+**Code Snippet:**
+```javascript
+addCar(NumberPlate, Brand, Model, Color, RatePerHours, VehicleType, Status = "Available") {
+    const existing = this.cars.find(c => c.NumberPlate === NumberPlate);
+    if (existing) {
+        return `The following car with the plate ${NumberPlate} already exists, please enter a different plate`;
+    }
 
-- Function 1 -  Registering User
+    const newCar = { NumberPlate, Brand, Model, Color, RatePerHours, VehicleType, Status };
+    this.cars.push(newCar);
 
-- Function 2 - Adding of new new Cars
+    return `${Brand} ${Model} with the plate: ${NumberPlate} has been added to the fleet successfully!`;
+}
+```
 
-- Function 3 - View all available cars in GetGo Fleet
+**Possible Output:**
+```
+Toyota Sienta Hybrid 3rd Gen with the plate: SMY7906E has been added to the fleet successfully!
+The following car with the plate SMY7906E already exists, please enter a different plate
+```
 
-- Function 4 - Renting of car
+### 3. `viewAllAvailableCars()`
 
-- Function 5 - Returning of rental car
+**Purpose:** To display all cars currently available for rent in the GetGo fleet.
 
-- Function 6 - Apply Promo Code
+**Code Snippet:**
+```javascript
+viewAllAvailableCars() {
+    const availableCars = this.cars.filter(c => c.Status === "Available");
 
-# References
-Provide the references that you have used to support your assignment. 
-- GetGo Offical Website : https://www.getgo.sg/
-- ReadMe writing guide : https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax
+    if (availableCars.length === 0) {
+        return "Sorry! No available cars at the moment, please try again later.";
+    }
 
+    return availableCars;
+}
+```
 
-# Example Usage from `app.js`
+**Possible Output:**
+```javascript
+[
+  {
+    id: 1,
+    NumberPlate: 'SNH1926F',
+    Brand: 'Toyota',
+    Model: 'Sienta Hybrid 3rd Gen',
+    Color: 'Green',
+    RatePerHours: '$60 per Hour',
+    VehicleType: 'MPV',
+    Status: 'Available'
+  },
+  {
+    id: 2,
+    NumberPlate: 'SNA1234A',
+    Brand: 'Skoda',
+    Model: 'Octavia',
+    Color: 'Black',
+    RatePerHours: '$40 per Hour',
+    VehicleType: 'Sedan',
+    Status: 'Available'
+  }
+]
+```
+Or if no cars are available:
+```
+Sorry! No available cars at the moment, please try again later.
+```
 
-```js
+### 4. `rentCar(nric, name, NumberPlate, Hours)`
+
+**Purpose:** To allow a registered user to rent an available car. It calculates the total rental cost.
+
+**Code Snippet:**
+```javascript
+rentCar(nric, name, NumberPlate, Hours) {
+    const car = this.cars.find(c => c.NumberPlate === NumberPlate);
+    const renter = this.users.find(u => u.name === name && u.nric === nric);
+
+    if (!car) return `Car with plate no: ${NumberPlate} not found`;
+    if (!renter) return `Renter with the name ${name} is not registered with us. Please register first`;
+    if (car.Status !== "Available") return `Car with plate no: ${NumberPlate} is not available`;
+
+    // This code is to convert "$50 per Hour" to 50
+    const hourlyRate = parseFloat(car.RatePerHours.replace(/[^0-9.]/g, ""));
+    const totalRentalCost = hourlyRate * Hours;
+
+    car.Status = "Rented";
+
+    this.rentals.push({
+        name,
+        nric,
+        NumberPlate,
+        Hours,
+        totalRentalCost,
+        Status: "Ongoing"
+    });
+
+    return `${name} has successfully rented ${car.Brand} ${car.Model}, plate No: ${car.NumberPlate} for ${Hours} hour(s). Total Cost: $${totalRentalCost}.`;
+}
+```
+
+**Possible Output:**
+```
+Thi Han has successfully rented Toyota Sienta Hybrid 3rd Gen, plate No: SMY7906E for 3 hour(s). Total Cost: $150.
+Car with plate no: SMY7906E is not available
+Renter with the name Thi Han is not registered with us. Please register first
+```
+
+### 5. `returnCar(nric, NumberPlate)`
+
+**Purpose:** To mark a rented car as returned and update its status to "Available".
+
+**Code Snippet:**
+```javascript
+returnCar(nric, NumberPlate) {
+    const car = this.cars.find(c => c.NumberPlate === NumberPlate);
+    const rental = this.rentals.find(r =>
+        r.NumberPlate === NumberPlate &&
+        r.nric === nric &&
+        r.Status === "Ongoing"
+    );
+
+    if (!car || !rental) {
+        return `No ongoing rental booking found for car number plate: ${NumberPlate} and NRIC: ${nric}`;
+    }
+
+    car.Status = "Available";
+    rental.Status = "Completed";
+
+    return `Car with the plate ${NumberPlate} has been returned successfully. Thank you for booking with GetGo!`;
+}
+```
+
+**Possible Output:**
+```
+Car with the plate SMY7906E has been returned successfully. Thank you for booking with GetGo!
+No ongoing rental booking found for car number plate: SMY7906E and NRIC: T0407944I
+```
+
+## Example Usage from `app.js`
+
+```javascript
 const getgo = require("./ThiHan_GetGo.js");
 
 console.log("Function 1: Registering User");
@@ -79,3 +218,9 @@ console.log(getgo.rentCar("T0407944I", "Thi Han", "SMY7906E", 3));
 
 console.log("\nFunction 5: Returning a Car");
 console.log(getgo.returnCar("T0407944I", "SMY7906E"));
+```
+
+## References
+
+*   GetGo Official Website: https://www.getgo.sg/
+*   Readme Writing Guide: https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax

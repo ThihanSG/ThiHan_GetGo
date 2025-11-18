@@ -53,7 +53,7 @@ registerUser(name, nric, address, contactno) {
 **Possible Output:**
 ```
 User with the following name Thi Han has been registered successfully!
-User with the following NRIC T0407944I already exists!
+User with the following NRIC T0401234D already exists!
 ```
 
 ### 2. `addCar(NumberPlate, Brand, Model, Color, RatePerHours, VehicleType, Status = "Available")`
@@ -77,8 +77,8 @@ addCar(NumberPlate, Brand, Model, Color, RatePerHours, VehicleType, Status = "Av
 
 **Possible Output:**
 ```
-Toyota Sienta Hybrid 3rd Gen with the plate: SMY7906E has been added to the fleet successfully!
-The following car with the plate SMY7906E already exists, please enter a different plate
+Successful output #1: Toyota Sienta Hybrid 3rd Gen with the plate: SMY7906E has been added to the fleet successfully!
+Unsuccessful output #1: The following car with the plate SMY7906E already exists, please kindly enter a different number plate
 ```
 
 ### 3. `viewAllAvailableCars()`
@@ -163,9 +163,9 @@ rentCar(nric, name, NumberPlate, Hours) {
 
 **Possible Output:**
 ```
-Thi Han has successfully rented Toyota Sienta Hybrid 3rd Gen, plate No: SMY7906E for 3 hour(s). Total Cost: $150.
-Car with plate no: SMY7906E is not available
-Renter with the name Thi Han is not registered with us. Please register first
+Successful : Thi Han has successfully rented Toyota Sienta Hybrid 3rd Gen, plate No: SMY7906E for 3 hour(s). Total Cost: $150.
+Unsuccessful output #1 : Car with plate no: SMY7906E is not available
+Unsuccessful output #2 : Renter with the name Thi Han is not registered with us. Please register first
 ```
 
 ### 5. `returnCar(nric, NumberPlate)`
@@ -195,8 +195,8 @@ returnCar(nric, NumberPlate) {
 
 **Possible Output:**
 ```
-Car with the plate SMY7906E has been returned successfully. Thank you for booking with GetGo!
-No ongoing rental booking found for car number plate: SMY7906E and NRIC: T0407944I
+Successful Output #1 : Car with the plate SMY7906E has been returned successfully. Thank you for booking with GetGo!
+Unsuccessful Output #1 : No ongoing rental booking found for car number plate: SMY7906E and NRIC: T0401234D
 ```
 
 ## Example Usage from `app.js`
@@ -222,5 +222,10 @@ console.log(getgo.returnCar("T0407944I", "SMY7906E"));
 
 ## References
 
+These are link of references that was used for this assignment 
+
+Reference Website: 
 *   GetGo Official Website: https://www.getgo.sg/
+
+Readme Writing Reference : 
 *   Readme Writing Guide: https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax

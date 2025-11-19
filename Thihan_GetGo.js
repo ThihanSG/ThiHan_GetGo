@@ -76,7 +76,7 @@ module.exports = {
         if (!renter) return `Renter with the name ${name} is not registered with us. Please register first`;
         if (car.Status !== "Available") return `Car with plate no: ${NumberPlate} is not available`;
 
-        // This code is to convert "$50 per Hour" to 50
+        // This code is to convert rate per hours.
         const hourlyRate = parseFloat(car.RatePerHours.replace(/[^0-9.]/g, ""));
         const totalRentalCost = hourlyRate * Hours;
 
@@ -112,15 +112,23 @@ module.exports = {
 
 
     // [Function 6 - View user's rental history]
-    viewUserHistory(nric) {
+    viewUserHistory(name, nric) {
+        const user = this.users.find(u => u.name === name && u.nric === nric);
         const history = this.rentals.filter(r => r.nric === nric);
-        return history.length ? history : `No rental history for Name: ${this.users.name}, NRIC: ${nric}`;
+
+        if (!user) return `No such user found with the nric number: ${nric}`;
+        if (history.length === 0) return `User ${user.name} has no rental history.`;
+
+        return history;
     },
 
-    // [Function 7] -  Estimate Cost Before Renting
+
+
+
+    // [Function 7] -  Estimate Cost Before user rents a car 
     estimateCost(NumberPlate, Hours) {
         const car = this.cars.find(c => c.NumberPlate === NumberPlate);
-        if (!car) return `Car with plate ${NumberPlate} not found`;
+        if (!car) return `Car with plate '${NumberPlate}' not found!`;
         const hourlyRate = parseFloat(car.RatePerHours.replace(/[^0-9.]/g, ""));
         const estimatedTotal = hourlyRate * Hours;
         return `Estimated cost for renting ${car.Brand} ${car.Model} ${NumberPlate} for ${Hours} hour(s) is $${estimatedTotal}.`;

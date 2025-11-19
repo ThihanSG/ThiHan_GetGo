@@ -16,7 +16,7 @@ console.log("\nFunction 5: Returning a Car");
 console.log(getgo.returnCar("T0401234D", "SMU992D"));
 
 console.log("\nFunction 6: Rental History");
-console.log(getgo.viewUserHistory("T0401234D"));
+console.log(getgo.viewUserHistory("Thi Han" , "T040234D"));
 
 
 console.log("\nFunction 7: Estimate Rental Cost");

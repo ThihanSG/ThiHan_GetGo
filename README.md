@@ -8,9 +8,9 @@
 
 ---
 
-## Project Introduction
+## Overview
 
-This is a Node.js module serving as a reference for a car-sharing application called GetGo. It allows users to:
+This is a Node.js module serving as a reference for a car-sharing application called GetGo. It allows users to perform the following tasks:
 
 1.  Register a user
 2.  Add cars to the fleet
@@ -18,7 +18,7 @@ This is a Node.js module serving as a reference for a car-sharing application ca
 4.  Rent a car
 5.  Return a car
 
-This module uses simple in-memory arrays (`users`, `cars`, `rentals`) to store data, making it lightweight and without the need for a database.
+
 
 ## How to Use
 
@@ -29,26 +29,19 @@ This module uses simple in-memory arrays (`users`, `cars`, `rentals`) to store d
 
 ## Functions
 
-Here's a detailed breakdown of each function, including code snippets and possible outputs.
 
-### 1. `registerUser(name, nric, address, contactno)`
+### Function 1:  Register User
 
-**Purpose:** To register new users to the application.
+**Purpose:** To register new users to the application. The function checks if the NRIC already exists and adds the new user if they don't exist.
 
-**Code Snippet:**
-```javascript
-registerUser(name, nric, address, contactno) {
-    const existing = this.users.find(u => u.nric === nric);
-    if (existing) {
-        return `User with the following NRIC ${nric} already exists!`;
-    }
+**Parameter** :
 
-    const newUser = { name, nric, address, contactno };
-    this.users.push(newUser);
+- name 
+- nric
+- address
+- contactNo
+<br>
 
-    return `User with the following name ${name} has been registered successfully!`;
-}
-```
 
 **Possible Output:**
 
@@ -62,24 +55,18 @@ Unsuccessful output:
 User with the following NRIC T0401234D already exists!
 ```
 
-### 2. `addCar(NumberPlate, Brand, Model, Color, RatePerHours, VehicleType, Status = "Available")`
+### Function 2. `addCar(NumberPlate, Brand, Model, Color, RatePerHours, VehicleType, Status = "Available")`
 
-**Purpose:** To add new cars to the GetGo fleet.
+**Purpose:** To add new cars to the GetGo fleet. When a vehicle is added , the default status would be set to "Available"
 
-**Code Snippet:**
-```javascript
-addCar(NumberPlate, Brand, Model, Color, RatePerHours, VehicleType, Status = "Available") {
-    const existing = this.cars.find(c => c.NumberPlate === NumberPlate);
-    if (existing) {
-        return `The following car with the plate ${NumberPlate} already exists, please enter a different plate`;
-    }
-
-    const newCar = { NumberPlate, Brand, Model, Color, RatePerHours, VehicleType, Status };
-    this.cars.push(newCar);
-
-    return `${Brand} ${Model} with the plate: ${NumberPlate} has been added to the fleet successfully!`;
-}
-```
+**Parameter**:
+- NumberPlate
+- Brand
+- Model
+- Color
+- RatePerHours
+- VehicleType
+- Status
 
 **Possible Output:**
 
@@ -95,20 +82,8 @@ Unsuccessful output #1: The following car with the plate SMY7906E already exists
 
 ### 3. `viewAllAvailableCars()`
 
-**Purpose:** To display all cars currently available for rent in the GetGo fleet.
+**Purpose:** To display all cars currently available for rent in the GetGo fleet. This function will check if the status of the car is "Available" and will compile all of the cars with the status "Available" and display as a list
 
-**Code Snippet:**
-```javascript
-viewAllAvailableCars() {
-    const availableCars = this.cars.filter(c => c.Status === "Available");
-
-    if (availableCars.length === 0) {
-        return "Sorry! No available cars at the moment, please try again later.";
-    }
-
-    return availableCars;
-}
-```
 
 **Possible Output:**
 ```javascript
@@ -142,36 +117,13 @@ Sorry! No available cars at the moment, please try again later.
 
 ### 4. `rentCar(nric, name, NumberPlate, Hours)`
 
-**Purpose:** To allow a registered user to rent an available car. It calculates the total rental cost.
+**Purpose:** To allow a registered user to rent an available car. This function will calculates the total rental cost depending on the cost per hours * the number of hours rented.
 
-**Code Snippet:**
-```javascript
-rentCar(nric, name, NumberPlate, Hours) {
-    const car = this.cars.find(c => c.NumberPlate === NumberPlate);
-    const renter = this.users.find(u => u.name === name && u.nric === nric);
-
-    if (!car) return `Car with plate no: ${NumberPlate} not found`;
-    if (!renter) return `Renter with the name ${name} is not registered with us. Please register first`;
-    if (car.Status !== "Available") return `Car with plate no: ${NumberPlate} is not available`;
-
-    // This code is to convert "$50 per Hour" to 50
-    const hourlyRate = parseFloat(car.RatePerHours.replace(/[^0-9.]/g, ""));
-    const totalRentalCost = hourlyRate * Hours;
-
-    car.Status = "Rented";
-
-    this.rentals.push({
-        name,
-        nric,
-        NumberPlate,
-        Hours,
-        totalRentalCost,
-        Status: "Ongoing"
-    });
-
-    return `${name} has successfully rented ${car.Brand} ${car.Model}, plate No: ${car.NumberPlate} for ${Hours} hour(s). Total Cost: $${totalRentalCost}.`;
-}
-```
+**Parameter**:
+- nric
+- name
+- NumberPlate
+- Hours
 
 **Possible Output:**
 
@@ -190,38 +142,22 @@ Unsuccessful output #2 : Renter with the name Thi Han is not registered with us.
 
 **Purpose:** To mark a rented car as returned and update its status to "Available".
 
-**Code Snippet:**
-```javascript
-returnCar(nric, NumberPlate) {
-    const car = this.cars.find(c => c.NumberPlate === NumberPlate);
-    const rental = this.rentals.find(r =>
-        r.NumberPlate === NumberPlate &&
-        r.nric === nric &&
-        r.Status === "Ongoing"
-    );
+**Parameters**
+- nric
+- NumberPlate
 
-    if (!car || !rental) {
-        return `No ongoing rental booking found for car number plate: ${NumberPlate} and NRIC: ${nric}`;
-    }
-
-    car.Status = "Available";
-    rental.Status = "Completed";
-
-    return `Car with the plate ${NumberPlate} has been returned successfully. Thank you for booking with GetGo!`;
-}
-```
 
 **Possible Output:**
 
 Successful output:
 ```
-Successful Output #1 : Car with the plate SMY7906E has been returned successfully. Thank you for booking with GetGo
+Car with the plate SMY7906E has been returned successfully. Thank you for booking with GetGo
 ```
 
 Unsuccessful output
 ```
 
-Unsuccessful Output #1 : No ongoing rental booking found for car number plate: SMY7906E and NRIC: T0401234D
+No ongoing rental booking found for car number plate: SMY7906E and NRIC: T0401234D
 ```
 
 ## Example Usage from `app.js`

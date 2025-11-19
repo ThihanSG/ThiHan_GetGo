@@ -14,3 +14,10 @@ console.log(getgo.rentCar("T0401234D", "Thi Han", "SMU992D", 2));
 
 console.log("\nFunction 5: Returning a Car");
 console.log(getgo.returnCar("T0401234D", "SMU992D"));
+
+console.log("\nFunction 6: Rental History");
+console.log(getgo.viewUserHistory("T0401234D"));
+
+
+console.log("\nFunction 7: Estimate Rental Cost");
+console.log(getgo.estimateCost("SNA13234A", 5));

@@ -98,11 +98,7 @@ module.exports = {
     // [Function 5] Return Car
     returnCar(nric, NumberPlate) {
         const car = this.cars.find(c => c.NumberPlate === NumberPlate);
-        const rental = this.rentals.find(r =>
-            r.NumberPlate === NumberPlate &&
-            r.nric === nric &&
-            r.Status === "Ongoing"
-        );
+        const rental = this.rentals.find(r => r.NumberPlate === NumberPlate && r.nric === nric && r.Status === "Ongoing");
 
         if (!car || !rental) {
             return `No ongoing rental booking found for car number plate: ${NumberPlate} and NRIC: ${nric}`;
@@ -112,6 +108,25 @@ module.exports = {
         rental.Status = "Completed";
 
         return `Car with the plate ${NumberPlate} has been returned successfully. Thank you for booking with GetGo!`;
+    },
+
+
+    // [Function 6 - View user's rental history]
+    viewUserHistory(nric) {
+        const history = this.rentals.filter(r => r.nric === nric);
+        return history.length ? history : `No rental history for Name: ${this.users.name}, NRIC: ${nric}`;
+    },
+
+    // [Function 7] -  Estimate Cost Before Renting
+    estimateCost(NumberPlate, Hours) {
+        const car = this.cars.find(c => c.NumberPlate === NumberPlate);
+        if (!car) return `Car with plate ${NumberPlate} not found`;
+        const hourlyRate = parseFloat(car.RatePerHours.replace(/[^0-9.]/g, ""));
+        const estimatedTotal = hourlyRate * Hours;
+        return `Estimated cost for renting ${car.Brand} ${car.Model} ${NumberPlate} for ${Hours} hour(s) is $${estimatedTotal}.`;
     }
+
+
+
 
 };

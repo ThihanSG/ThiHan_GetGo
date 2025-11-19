@@ -80,7 +80,7 @@ Unsuccessful output :
 Unsuccessful output #1: The following car with the plate SMY7906E already exists, please kindly enter a different number plate
 ```
 
-### 3. `viewAllAvailableCars()`
+### Function 3. `viewAllAvailableCars()`
 
 **Purpose:** To display all cars currently available for rent in the GetGo fleet. This function will check if the status of the car is "Available" and will compile all of the cars with the status "Available" and display as a list
 
@@ -115,7 +115,7 @@ Or if no cars are available:
 Sorry! No available cars at the moment, please try again later.
 ```
 
-### 4. `rentCar(nric, name, NumberPlate, Hours)`
+### Function 4. `rentCar(nric, name, NumberPlate, Hours)`
 
 **Purpose:** To allow a registered user to rent an available car. This function will calculates the total rental cost depending on the cost per hours * the number of hours rented.
 
@@ -138,7 +138,7 @@ Unsuccessful output #1 : Car with plate no: SMY7906E is not available
 Unsuccessful output #2 : Renter with the name Thi Han is not registered with us. Please register first
 ```
 
-### 5. `returnCar(nric, NumberPlate)`
+### Function 5. `returnCar(nric, NumberPlate)`
 
 **Purpose:** To mark a rented car as returned and update its status to "Available".
 
@@ -158,7 +158,52 @@ Unsuccessful output
 ```
 
 No ongoing rental booking found for car number plate: SMY7906E and NRIC: T0401234D
+
 ```
+
+### Function 6. ViewUserHistory
+
+**Purpose** : The purpose of this function is to view the rental history of the user
+
+**Possible Output**
+
+Successful output: 
+```
+Function 6: Rental History
+[
+  {
+    name: 'Thi Han',
+    nric: 'T0401234D',
+    NumberPlate: 'SMU992D',
+    Hours: 2,
+    totalRentalCost: 140,
+    Status: 'Completed'
+  }
+]
+```
+
+No history found output: 
+```
+No rental history for Name: Jacky , NRIC: T0509876Z
+```
+
+
+### Function 7. 
+
+**Purpose** : The purpose of this function is to estimate the cost of the rental depending on the car model before renting
+
+**Possible Output**
+
+Successful output: 
+```
+Estimated cost for renting Skoda Octavia (SNA1234A) for 5 hour(s) is $200.
+```
+
+Unsuccessful output: 
+```
+Car with plate SNA13234A not found
+```
+
 
 ## Example Usage from `app.js`
 
